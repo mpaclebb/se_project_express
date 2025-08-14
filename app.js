@@ -26,15 +26,15 @@ app.listen(PORT, () => {
   console.log("This is working");
 });
 
-//const express = require("express");
-//const mongoose = require("mongoose");
-//const Garment = require("./models/Garment");
+// const express = require("express");
+// const mongoose = require("mongoose");
+// const Garment = require("./models/Garment");
 
-//const app = express();
-//const { PORT = 3002 } = process.env;
+// const app = express();
+// const { PORT = 3002 } = process.env;
 
 // Async function to handle DB connection and test insert
-//async function startServer() {
+// async function startServer() {
 //  try {
 //    await mongoose.connect("mongodb+srv://mpacleb:Augustu1234%21@cluster0.qqo4hgq.mongodb.net/wtwr_db?retryWrites=true&w=majority&appName=Cluster0");
 //    console.log("✅ Connected to DB");
@@ -48,6 +48,6 @@ app.listen(PORT, () => {
 //  app.listen(PORT, () => {
 //    console.log(`🚀 Server is running on port ${PORT}`);
 //  });
-//}
+// }
 
-//startServer();
+// startServer();

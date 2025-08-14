@@ -5,7 +5,7 @@ const {
   SERVER_ERROR_STATUS_CODE,
 } = require("../utils/errors");
 
-//GET /users
+// GET /users
 
 const getUsers = (req, res) => {
   User.find({})

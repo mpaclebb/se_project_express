@@ -23,13 +23,13 @@ const clothingItem = new mongoose.Schema({
   },
 
   owner: {
-    //owner - a link to the item author's model of the ObjectID type, a required field
+    // owner - a link to the item author's model of the ObjectID type, a required field
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "User", 
   },
   likes: {
-    //like - a list of users who liked the item, an ObjectID array with a reference to the user modal (empty by default)
+    // like - a list of users who liked the item, an ObjectID array with a reference to the user modal (empty by default)
     type: [mongoose.Schema.Types.ObjectId],
     ref: "User",
     default: [],
