@@ -35,8 +35,8 @@ const createItem = (req, res) => {
 const getItems = (req, res) => {
   ClothingItem.find({})
     .then((items) => res.status(200).send(items))
-    .catch((e) => {
-      console.error(e);
+    .catch((err) => {
+      console.error(err);
       if (err.name === "DocumentNotFoundError") {
         res
           .status(NOT_FOUND_STATUS_CODE)
