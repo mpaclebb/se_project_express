@@ -1,4 +1,4 @@
-const ClothingItem = require("../models/clothingitem");
+const ClothingItem = require("../models/clothingItem");
 
 const {
   BAD_REQUEST_STATUS_CODE,
@@ -52,7 +52,7 @@ const updateItem = (req, res) => {
   const { itemId } = req.params;
   const { imageUrl } = req.body;
 
-  ClothingItem.findByIdAndUpdate(itemId, { $set: { imageURL } })
+  ClothingItem.findByIdAndUpdate(itemId, { $set: { imageUrl } })
     .orFail()
     .then((item) => res.status(200).send({ data: item }))
     .catch((err) => {
