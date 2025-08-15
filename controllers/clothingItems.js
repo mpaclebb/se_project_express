@@ -84,7 +84,8 @@ const deleteItem = (req, res) => {
         return res
           .status(BAD_REQUEST_STATUS_CODE)
           .send({ message: err.message });
-      } else if (err.name === "DocumentNotFoundError") {
+      }
+      if (err.name === "DocumentNotFoundError") {
         return res
           .status(NOT_FOUND_STATUS_CODE)
           .send({ message: "Requested resoruce not found" });
