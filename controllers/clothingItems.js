@@ -28,7 +28,7 @@ const createItem = (req, res) => {
       }
       return res
         .status(BAD_REQUEST_STATUS_CODE)
-        .send({ message: "err.message" });
+        .send({ message: err.message });
     });
 };
 
@@ -48,28 +48,7 @@ const getItems = (req, res) => {
     });
 };
 
-const updateItem = (req, res) => {
-  const { itemId } = req.params;
-  const { imageUrl } = req.body;
 
-  ClothingItem.findByIdAndUpdate(itemId, { $set: { imageUrl } })
-    .orFail()
-    .then((item) => res.status(200).send({ data: item }))
-    .catch((err) => {
-      console.error(err);
-      if (err.name === "ValidationError") {
-        // find error name
-        res.status(BAD_REQUEST_STATUS_CODE).send({ message: err.message });
-      } else if (err.name === "DocumentNotFoundError") {
-        res
-          .status(NOT_FOUND_STATUS_CODE)
-          .send({ message: "Requested resource not found" });
-      }
-      return res
-        .status(SERVER_ERROR_STATUS_CODE)
-        .send({ message: err.message });
-    });
-};
 
 const deleteItem = (req, res) => {
   const { itemId } = req.params;
@@ -153,7 +132,6 @@ const dislikeItem = (req, res) => {
 module.exports = {
   createItem,
   getItems,
-  updateItem,
   deleteItem,
   likeItem,
   dislikeItem,

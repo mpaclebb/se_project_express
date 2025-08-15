@@ -6,7 +6,7 @@ const app = express();
 const { PORT = 3001 } = process.env;
 
 mongoose
-  .connect("mongodb://localhost:27017/wtwr_db")
+  .connect("mongodb://127.0.0.1:27017/wtwr_db")
   .then(() => {
     console.log("Connected to DB");
   })
@@ -26,28 +26,3 @@ app.listen(PORT, () => {
   console.log("This is working");
 });
 
-// const express = require("express");
-// const mongoose = require("mongoose");
-// const Garment = require("./models/Garment");
-
-// const app = express();
-// const { PORT = 3002 } = process.env;
-
-// Async function to handle DB connection and test insert
-// async function startServer() {
-//  try {
-//    await mongoose.connect("mongodb+srv://mpacleb:Augustu1234%21@cluster0.qqo4hgq.mongodb.net/wtwr_db?retryWrites=true&w=majority&appName=Cluster0");
-//    console.log("✅ Connected to DB");
-
-//    const garment = await Garment.create({ name: "T-Shirt", type: "Top", size: "M" });
-//    console.log("🧥 Garment saved:", garment);
-//  } catch (err) {
-//    console.error("❌ MongoDB error:", err);
-//  }
-
-//  app.listen(PORT, () => {
-//    console.log(`🚀 Server is running on port ${PORT}`);
-//  });
-// }
-
-// startServer();
