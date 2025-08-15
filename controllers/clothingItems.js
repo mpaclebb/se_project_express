@@ -10,13 +10,13 @@ const createItem = (req, res) => {
   console.log(req);
   console.log(req.user._id);
 
-  const { name, weather, imageURL } = req.body;
+  const { name, weather, imageUrl } = req.body;
 
   ClothingItem.create({
     name,
     weather,
-    imageURL,
-    owner: req.user._id
+    imageUrl,
+    owner: req.user._id,
   })
     .then((item) => res.status(201).send(item))
     .catch((err) => {
@@ -49,10 +49,10 @@ const getItems = (req, res) => {
 };
 
 const updateItem = (req, res) => {
-  const { itemID } = req.params;
-  const { imageURL } = req.body;
+  const { itemId } = req.params;
+  const { imageUrl } = req.body;
 
-  ClothingItem.findByIdAndUpdate(itemID, { $set: { imageURL } })
+  ClothingItem.findByIdAndUpdate(itemId, { $set: { imageURL } })
     .orFail()
     .then((item) => res.status(200).send({ data: item }))
     .catch((err) => {
@@ -72,18 +72,20 @@ const updateItem = (req, res) => {
 };
 
 const deleteItem = (req, res) => {
-  const { itemID } = req.params;
+  const { itemId } = req.params;
 
-  console.log(itemID);
-  ClothingItem.findByIdAndDelete(itemID)
+  console.log(itemId);
+  ClothingItem.findByIdAndDelete(itemId)
     .orFail()
     .then((item) => res.status(200).send(item))
     .catch((err) => {
       console.error(err);
       if (err.name === "ValidationError" || err.name === "CastError") {
-        res.status(BAD_REQUEST_STATUS_CODE).send({ message: err.message });
+        return res
+          .status(BAD_REQUEST_STATUS_CODE)
+          .send({ message: err.message });
       } else if (err.name === "DocumentNotFoundError") {
-        res
+        return res
           .status(NOT_FOUND_STATUS_CODE)
           .send({ message: "Requested resoruce not found" });
       }
@@ -93,7 +95,7 @@ const deleteItem = (req, res) => {
     });
 };
 
-// LIKES  
+// LIKES
 
 const likeItem = (req, res) => {
   ClothingItem.findByIdAndUpdate(
@@ -109,7 +111,7 @@ const likeItem = (req, res) => {
         return res
           .status(BAD_REQUEST_STATUS_CODE)
           .send({ message: err.message });
-      } 
+      }
       if (err.name === "DocumentNotFoundError") {
         return res
           .status(NOT_FOUND_STATUS_CODE)
@@ -123,7 +125,7 @@ const likeItem = (req, res) => {
 
 const dislikeItem = (req, res) => {
   ClothingItem.findByIdAndUpdate(
-    req.params.itemID,
+    req.params.itemId,
     { $pull: { likes: req.user._id } },
     { new: true }
   )
@@ -135,7 +137,8 @@ const dislikeItem = (req, res) => {
         return res
           .status(BAD_REQUEST_STATUS_CODE)
           .send({ message: err.message });
-      } if (err.name === "DocumentNotFoundError") {
+      }
+      if (err.name === "DocumentNotFoundError") {
         return res
           .status(NOT_FOUND_STATUS_CODE)
           .send({ message: "Requested resource not found" });

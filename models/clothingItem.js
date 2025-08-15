@@ -13,7 +13,7 @@ const clothingItem = new mongoose.Schema({
     required: true,
     enum: ["hot", "warm", "cold"],
   },
-  imageURL: {
+  imageUrl: {
     type: String,
     required: true,
     validate: {
@@ -26,7 +26,7 @@ const clothingItem = new mongoose.Schema({
     // owner - a link to the item author's model of the ObjectID type, a required field
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "User", 
+    ref: "User",
   },
   likes: {
     // like - a list of users who liked the item, an ObjectID array with a reference to the user modal (empty by default)
