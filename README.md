@@ -5,6 +5,8 @@ This back-end project is focused on creating a server for the WTWR application. 
 ## Technologies
 
 JavaScript
+Node.JS
+Express
 
 ### Running the Project
 

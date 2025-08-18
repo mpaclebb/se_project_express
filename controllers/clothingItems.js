@@ -24,11 +24,11 @@ const createItem = (req, res) => {
       if (err.name === "ValidationError" || err.name === "CastError") {
         return res
           .status(BAD_REQUEST_STATUS_CODE)
-          .send({ message: err.message });
+          .send({ message: "An error has occured on the server." });
       }
       return res
         .status(BAD_REQUEST_STATUS_CODE)
-        .send({ message: err.message });
+        .send({ message: "An error has occured on the server." });
     });
 };
 
@@ -44,11 +44,9 @@ const getItems = (req, res) => {
       }
       return res
         .status(SERVER_ERROR_STATUS_CODE)
-        .send({ message: err.message });
+        .send({ message: "An error has occured on the server." });
     });
 };
-
-
 
 const deleteItem = (req, res) => {
   const { itemId } = req.params;
@@ -62,7 +60,7 @@ const deleteItem = (req, res) => {
       if (err.name === "ValidationError" || err.name === "CastError") {
         return res
           .status(BAD_REQUEST_STATUS_CODE)
-          .send({ message: err.message });
+          .send({ message: "An error has occured on the server." });
       }
       if (err.name === "DocumentNotFoundError") {
         return res
@@ -71,7 +69,7 @@ const deleteItem = (req, res) => {
       }
       return res
         .status(SERVER_ERROR_STATUS_CODE)
-        .send({ message: err.message });
+        .send({ message: "An error has occured on the server." });
     });
 };
 
@@ -90,7 +88,7 @@ const likeItem = (req, res) => {
       if (err.name === "ValidationError" || err.name === "CastError") {
         return res
           .status(BAD_REQUEST_STATUS_CODE)
-          .send({ message: err.message });
+          .send({ message: "An error has occured on the server." });
       }
       if (err.name === "DocumentNotFoundError") {
         return res
@@ -99,7 +97,7 @@ const likeItem = (req, res) => {
       }
       return res
         .status(SERVER_ERROR_STATUS_CODE)
-        .send({ message: err.message });
+        .send({ message: "An error has occured on the server." });
     });
 };
 
@@ -116,7 +114,7 @@ const dislikeItem = (req, res) => {
       if (err.name === "ValidationError" || err.name === "CastError") {
         return res
           .status(BAD_REQUEST_STATUS_CODE)
-          .send({ message: err.message });
+          .send({ message: "An error has occured on the server." });
       }
       if (err.name === "DocumentNotFoundError") {
         return res
@@ -125,7 +123,7 @@ const dislikeItem = (req, res) => {
       }
       return res
         .status(SERVER_ERROR_STATUS_CODE)
-        .send({ message: err.message });
+        .send({ message: "An error has occured on the server." });
     });
 };
 

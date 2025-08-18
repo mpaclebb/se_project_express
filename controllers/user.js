@@ -20,7 +20,7 @@ const getUsers = (req, res) => {
 
       return res
         .status(SERVER_ERROR_STATUS_CODE)
-        .send({ message: err.message });
+        .send({ message: "An error has occured on the server." });
     });
 };
 
@@ -34,11 +34,11 @@ const createUser = (req, res) => {
       if (err.name === "ValidationError") {
         return res
           .status(BAD_REQUEST_STATUS_CODE)
-          .send({ message: err.message });
+          .send({ message: "An error has occured on the server." });
       }
       return res
         .status(SERVER_ERROR_STATUS_CODE)
-        .send({ message: err.message });
+        .send({ message: "An error has occured on the server." });
     });
 };
 
@@ -53,14 +53,15 @@ const getUser = (req, res) => {
         return res
           .status(NOT_FOUND_STATUS_CODE)
           .send({ message: "Requested resource not found" });
-      }if (err.name === "CastError") {
+      }
+      if (err.name === "CastError") {
         return res
           .status(BAD_REQUEST_STATUS_CODE)
-          .send({ message: err.message });
+          .send({ message: "An error has occured on the server." });
       }
       return res
         .status(SERVER_ERROR_STATUS_CODE)
-        .send({ message: err.message });
+        .send({ message: "An error has occured on the server." });
     });
 };
 
