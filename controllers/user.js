@@ -7,7 +7,7 @@ const {
   CONFLICT_STATUS_CODE,
   UNAUTHORIZED_STATUS,
 } = require("../utils/errors");
-const bcrypt = require("bycryptjs");
+const bcrypt = require("bcryptjs");
 const { JWT_SECRET } = require("../utils/config");
 
 const login = (req, res) => {
@@ -67,7 +67,7 @@ const createUser = (req, res) => {
   return User.findOne({ email }).then((existingUser) => {
     if (existingUser) {
       return res
-        .status(conflict)
+        .status(CONFLICT_STATUS_CODE)
         .send({ message: "This email already exists" });
     }
     return bcrypt
