@@ -3,7 +3,6 @@ const { NOT_FOUND_STATUS_CODE } = require('../utils/errors');
 const itemRouter = require('./clothingItems');
 const userRouter = require('./users');
 
-const { createUser, login } =require("./controllers/users");
 
 
 router.use('/users', userRouter);
