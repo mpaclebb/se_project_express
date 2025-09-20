@@ -8,11 +8,7 @@ const {
 } = require("../utils/errors");
 
 const createItem = (req, res) => {
-  console.log(req);
-  console.log(req.user._id);
-
   const { name, weather, imageUrl } = req.body;
-
   ClothingItem.create({
     name,
     weather,
@@ -35,7 +31,7 @@ const createItem = (req, res) => {
 
 const getItems = (req, res) => {
   ClothingItem.find({})
-    .then((items) => res.status(200).send(items))
+    .then((items) => res.send(items))
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
@@ -53,10 +49,19 @@ const deleteItem = (req, res) => {
   const { itemId } = req.params;
 
   console.log(itemId);
-  ClothingItem.findByIdAndDelete(itemId)
+  ClothingItem.findById(itemId)
     .orFail()
-    .then((item) => res.status(200).send(item))
+    .then((item) => {
+      if (!item.owner.equals(req.user._id)) {
+        return res
+          .status(FORBIDDEN)
+          .send({ message: "You can't delete this item"});
+      }
+    return  ClothingItem.findByIdAndDelete(itemId)
+     .orFail()
+     .then(() => res.send({ message: "Item deleted"}))
     .catch((err) => {
+    
       console.error(err);
       if (err.name === "ValidationError" || err.name === "CastError") {
         return res
@@ -72,7 +77,9 @@ const deleteItem = (req, res) => {
         .status(SERVER_ERROR_STATUS_CODE)
         .send({ message: "An error has occured on the server." });
     });
-};
+});
+}
+
 
 // LIKES
 
