@@ -1,4 +1,6 @@
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
 const User = require("../models/user");
 const {
   BAD_REQUEST_STATUS_CODE,
@@ -7,7 +9,6 @@ const {
   CONFLICT_STATUS_CODE,
   UNAUTHORIZED_STATUS,
 } = require("../utils/errors");
-const bcrypt = require("bcryptjs");
 const { JWT_SECRET } = require("../utils/config");
 
 const login = (req, res) => {
@@ -15,30 +16,28 @@ const login = (req, res) => {
 
   if (!email || !password) {
     return res
-    .status(BAD_REQUEST_STATUS_CODE)
-    .send({ message: "Email and password are required"});
+      .status(BAD_REQUEST_STATUS_CODE)
+      .send({ message: "Email and password are required" });
   }
-  return User.findUserByCredentials({ email, password})
-  .then((user) => {
-    const token = jwt.sign({ _id: user._id}, JWT_SECRET,
-    {
-      expiresIn: "7d",
-    });
-    return res.send({ token });
-  })
-  .catch((err) => {
-    console.error(err);
-    if (err.message === "Incorrect email or password") {
+  return User.findUserByCredentials({ email, password })
+    .then((user) => {
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+        expiresIn: "7d",
+      });
+      return res.send({ token });
+    })
+    .catch((err) => {
+      console.error(err);
+      if (err.message === "Incorrect email or password") {
+        return res
+          .status(UNAUTHORIZED_STATUS)
+          .send({ message: "Incorrect email or password" });
+      }
       return res
-      .status(UNAUTHORIZED_STATUS)
-      .send({ message: "Incorrect email or password"});
-    }
-    return res
-    .status(SERVER_ERROR_STATUS_CODE)
-    .send({ message: "An error occured with the server"})
-  });
-}
-
+        .status(SERVER_ERROR_STATUS_CODE)
+        .send({ message: "An error occured with the server" });
+    });
+};
 
 const getUsers = (req, res) => {
   User.find({})
