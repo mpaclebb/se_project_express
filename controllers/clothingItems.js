@@ -60,9 +60,10 @@ const deleteItem = (req, res) => {
     return  ClothingItem.findByIdAndDelete(itemId)
      .orFail()
      .then(() => res.send({ message: "Item deleted"}))
+    })
     .catch((err) => {
-    
       console.error(err);
+
       if (err.name === "ValidationError" || err.name === "CastError") {
         return res
           .status(BAD_REQUEST_STATUS_CODE)
@@ -77,8 +78,7 @@ const deleteItem = (req, res) => {
         .status(SERVER_ERROR_STATUS_CODE)
         .send({ message: "An error has occured on the server." });
     });
-});
-}
+  }
 
 
 // LIKES

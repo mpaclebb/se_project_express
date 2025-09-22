@@ -19,7 +19,7 @@ const login = (req, res) => {
       .status(BAD_REQUEST_STATUS_CODE)
       .send({ message: "Email and password are required" });
   }
-  return User.findUserByCredentials({ email, password })
+  return User.findUserByCredentials( email, password )
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
         expiresIn: "7d",
@@ -79,7 +79,11 @@ const createUser = (req, res) => {
           password: hash,
         })
       )
-      .then((user) => res.status(201).send(user))
+      .then((user) => {
+        const userObj = user.toObject();
+        delete userObj.password;
+        return res.status(201).send(userObj);
+      })
       .catch((err) => {
         console.error(err);
         if (err.name === "ValidationError") {
@@ -100,7 +104,7 @@ const createUser = (req, res) => {
 };
 
 const getCurrentUser = (req, res) => {
-  const { userID } = req.params;
+  const  userID  = req.user._id;
   User.findById(userID)
     .orFail()
     .then((user) => res.send(user))
@@ -124,7 +128,7 @@ const getCurrentUser = (req, res) => {
 
 const updateUser = (req, res) => {
   const { name, avatar } = req.body;
-  const { userID } = req.params;
+  const  userID  = req.user._id;
   User.findByIdAndUpdate(
     userID,
     { name, avatar },
